@@ -8,5 +8,8 @@
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     
     <mapping class="entities.Kullanicilar"></mapping>
+    <mapping class="entities.Yazarlar"></mapping>
+    <mapping class="entities.Kitaplar"></mapping>
+    <mapping class="entities.YayinEvleri"></mapping>
   </session-factory>
 </hibernate-configuration>

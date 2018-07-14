@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -36,20 +37,23 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "YayinEvleri.findByAciklama", query = "SELECT y FROM YayinEvleri y WHERE y.aciklama = :aciklama")})
 public class YayinEvleri implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "yayinEviAdi")
+    private String yayinEviAdi;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "aciklama")
+    private String aciklama;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "yayinEviID")
     private Integer yayinEviID;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "yayinEviAdi")
-    private int yayinEviAdi;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "aciklama")
-    private int aciklama;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "yayinEviID")
     private Collection<Kitaplar> kitaplarCollection;
 
@@ -60,7 +64,7 @@ public class YayinEvleri implements Serializable {
         this.yayinEviID = yayinEviID;
     }
 
-    public YayinEvleri(Integer yayinEviID, int yayinEviAdi, int aciklama) {
+    public YayinEvleri(Integer yayinEviID, String yayinEviAdi, String aciklama) {
         this.yayinEviID = yayinEviID;
         this.yayinEviAdi = yayinEviAdi;
         this.aciklama = aciklama;
@@ -74,21 +78,6 @@ public class YayinEvleri implements Serializable {
         this.yayinEviID = yayinEviID;
     }
 
-    public int getYayinEviAdi() {
-        return yayinEviAdi;
-    }
-
-    public void setYayinEviAdi(int yayinEviAdi) {
-        this.yayinEviAdi = yayinEviAdi;
-    }
-
-    public int getAciklama() {
-        return aciklama;
-    }
-
-    public void setAciklama(int aciklama) {
-        this.aciklama = aciklama;
-    }
 
     @XmlTransient
     public Collection<Kitaplar> getKitaplarCollection() {
@@ -122,6 +111,22 @@ public class YayinEvleri implements Serializable {
     @Override
     public String toString() {
         return "bean.YayinEvleri[ yayinEviID=" + yayinEviID + " ]";
+    }
+
+    public String getYayinEviAdi() {
+        return yayinEviAdi;
+    }
+
+    public void setYayinEviAdi(String yayinEviAdi) {
+        this.yayinEviAdi = yayinEviAdi;
+    }
+
+    public String getAciklama() {
+        return aciklama;
+    }
+
+    public void setAciklama(String aciklama) {
+        this.aciklama = aciklama;
     }
     
 }

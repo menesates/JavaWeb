@@ -7,6 +7,10 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,6 +26,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 /**
  *
@@ -35,6 +43,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Yazarlar.findByYazarID", query = "SELECT y FROM Yazarlar y WHERE y.yazarID = :yazarID")
     , @NamedQuery(name = "Yazarlar.findByYazarAdi", query = "SELECT y FROM Yazarlar y WHERE y.yazarAdi = :yazarAdi")
     , @NamedQuery(name = "Yazarlar.findByAciklama", query = "SELECT y FROM Yazarlar y WHERE y.aciklama = :aciklama")})
+@ManagedBean(name = "yazarlar")
+@SessionScoped
 public class Yazarlar implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -125,6 +135,22 @@ public class Yazarlar implements Serializable {
     @Override
     public String toString() {
         return "bean.Yazarlar[ yazarID=" + yazarID + " ]";
+    }
+    
+    public List yazarlar(){
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            
+            String hql = "from Yazarlar ";
+            
+            Query query = session.createQuery(hql);
+            //Query query = session.getNamedQuery("findAll");
+            
+            List<Yazarlar> list = query.list();
+            
+                   
+            return list;
     }
     
 }
