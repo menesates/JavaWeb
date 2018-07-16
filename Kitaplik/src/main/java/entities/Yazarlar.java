@@ -142,10 +142,10 @@ public class Yazarlar implements Serializable {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
             
-            String hql = "from Yazarlar ";
+            //String hql = "from Yazarlar ";
             
-            Query query = session.createQuery(hql);
-            //Query query = session.getNamedQuery("findAll");
+            //Query query = session.createQuery(hql);
+            Query query = session.getNamedQuery("Yazarlar.findAll");
             
             List<Yazarlar> list = query.list();
             
